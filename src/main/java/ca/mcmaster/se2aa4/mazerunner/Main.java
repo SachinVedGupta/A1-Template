@@ -30,21 +30,10 @@ public class Main {
             
             String mazeFilePath = cmd.getOptionValue("i");
 
-            // reading the maze
+            Maze m = new Maze(mazeFilePath, logger);
+            m.setMazeArray();
+            m.printMaze();
 
-            logger.trace("**** Reading the maze from file " + mazeFilePath);
-            BufferedReader reader = new BufferedReader(new FileReader(mazeFilePath));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                for (int idx = 0; idx < line.length(); idx++) {
-                    if (line.charAt(idx) == '#') {
-                        System.out.print("WALL ");
-                    } else if (line.charAt(idx) == ' ') {
-                        System.out.print("PASS ");
-                    }
-                }
-                System.out.print(System.lineSeparator());
-            }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
