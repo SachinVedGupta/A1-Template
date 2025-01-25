@@ -6,16 +6,18 @@ import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Maze {
+abstract class Maze {
   protected String maze_file_path;
   protected int height = -1;
   protected int width = -1;
   protected int[][] maze;
-  protected int startRow = -1;
-  protected int endRow = -1;
+  protected int startRow;
+  protected int endRow;
+  protected Logger logger;
 
   public Maze(String maze_path, Logger logger) {
     try {
+      this.logger = logger;
       logger.trace("**** Reading the maze from file " + maze_path);
       BufferedReader reader = new BufferedReader(new FileReader(maze_path));
       width = reader.readLine().length();
@@ -26,6 +28,10 @@ public class Maze {
     catch(Exception e) {
       logger.error("/!\\ An error has occured. The file was not found /!\\");
     }
+
+    setMazeArray();
+    printMaze();
+    setPoints();
   }
 
   public void setMazeArray() {
@@ -53,7 +59,7 @@ public class Maze {
       }
     }
     catch(Exception e) {
-      System.out.println("error");
+      logger.error("Error in creating the maze");
     }
   }
 
@@ -67,12 +73,18 @@ public class Maze {
     }
   }
 
-  public setPoints() {
+  public void setPoints() {
     for (int row = 0; row < height; row++) {
       if (maze[row][0] == 0) {
-
+        startRow = row;
+      }
+      if (maze[row][width - 1] == 0) {
+        endRow = row;
       }
     }
   }
+
+  abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
+  abstract boolean printAlgorithm();
 }
 

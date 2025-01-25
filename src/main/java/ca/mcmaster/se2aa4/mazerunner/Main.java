@@ -30,9 +30,7 @@ public class Main {
             
             String mazeFilePath = cmd.getOptionValue("i");
 
-            Maze m = new Maze(mazeFilePath, logger);
-            m.setMazeArray();
-            m.printMaze();
+            Navigate m = new Navigate(mazeFilePath, logger);
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
