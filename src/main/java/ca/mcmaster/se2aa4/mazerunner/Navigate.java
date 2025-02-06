@@ -137,8 +137,13 @@ class Navigate extends Maze {
     int rowIdx = startRow;
     int colIdx = 0;
     char direction = 'E';
+
+    System.out.println("\n\n\n");
+    printMaze(rowIdx, colIdx);
+    System.out.println("\n");
     
     while (colIdx != width - 1) {
+
       int[] ans;
       // System.out.println(isRight(rowIdx, colIdx, direction));
       if (isRight(rowIdx, colIdx, direction) && canFor(rowIdx, colIdx, direction)) {
@@ -159,12 +164,17 @@ class Navigate extends Maze {
         System.out.printf(" %c ", 'R');
 
         ans = verifyOneStep(rowIdx, colIdx, direction, 'F');
-        System.out.printf(" %c ", 'R');
+        System.out.printf(" %c ", 'F');
       }
 
       rowIdx = ans[0];
       colIdx = ans[1];
       direction = numToDir(ans[2]);
+
+      
+      System.out.println("\n\n\n");
+      printMaze(rowIdx, colIdx);
+      System.out.println("\n");
     }
 
 

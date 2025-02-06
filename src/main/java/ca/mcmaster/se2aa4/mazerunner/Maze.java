@@ -30,7 +30,6 @@ abstract class Maze {
     }
 
     setMazeArray();
-    printMaze();
     setPoints();
   }
 
@@ -63,11 +62,12 @@ abstract class Maze {
     }
   }
 
-  public void printMaze() {
+  public void printMaze(int rowIdx, int colIdx) {
     for (int row = 0; row < height; row++) {
       for (int col = 0; col < width; col++) {
-        if (maze[row][col] == 1) { System.out.print("WALL "); }
-        else { System.out.print("PASS "); }
+        if (maze[row][col] == 1) { System.out.print("#"); }
+        else if (row == rowIdx && col == colIdx) { System.out.print("@"); }
+        else { System.out.print(" "); }
       }
       System.out.println();
     }
