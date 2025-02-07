@@ -23,11 +23,12 @@ abstract class Maze { // includes methods and functionality related to the board
       logger.trace("**** Reading the maze from file " + maze_path);
       BufferedReader reader = new BufferedReader(new FileReader(maze_path));
       width = reader.readLine().length();
-      while (reader.readLine() != null) { height += 1; }
+      while (reader.readLine() != null) {
+        height += 1;
+      }
 
       maze_file_path = maze_path;
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       logger.error("/!\\ An error has occured. The file was not found /!\\");
     }
 
@@ -36,7 +37,7 @@ abstract class Maze { // includes methods and functionality related to the board
     setPoints();
   }
 
-  public void setMazeArray() { // convert the inputted maze txt file into a 2D integer array that represents it
+  private void setMazeArray() { // convert the inputted maze txt file into a 2D integer array that represents it
     maze = new int[height][width];
     try {
       // prepare the variables and reader
@@ -44,43 +45,48 @@ abstract class Maze { // includes methods and functionality related to the board
       String line;
       int row = 0;
       readerIt.readLine(); // get rid of first top row
-      
+
       // process each line --> character and add it into the array
       while ((line = readerIt.readLine()) != null && row < height) {
         // fill the array based on the lines contents
         for (int idx = 0; idx < line.length(); idx++) {
           if (line.charAt(idx) == '#') {
             maze[row][idx] = 1;
-          }
-          else if (line.charAt(idx) == ' ') {
+          } else if (line.charAt(idx) == ' ') {
             maze[row][idx] = 0;
           }
         }
-        
+
         // fill any remaining space (would be the exit line)
-        for (int extra = line.length(); extra < width; extra++) { maze[row][extra] = 0; }
+        for (int extra = line.length(); extra < width; extra++) {
+          maze[row][extra] = 0;
+        }
         row++;
       }
-    }
-    catch(Exception e) {
+    } catch (Exception e) {
       logger.error("Error in creating the maze");
     }
   }
 
-  public void printMaze(int rowIdx, int colIdx) { // print out the maze and current location
+  protected void printMaze(int rowIdx, int colIdx) { // print out the maze and current location
     for (int row = -1; row <= height; row++) {
       for (int col = 0; col < width; col++) {
         // based on the value in the array, print the character
-        if (row == -1 || row == height) { System.out.print("#"); }
-        else if (maze[row][col] == 1) { System.out.print("#"); }
-        else if (row == rowIdx && col == colIdx) { System.out.print("@"); }
-        else { System.out.print(" "); }
+        if (row == -1 || row == height) {
+          System.out.print("#");
+        } else if (maze[row][col] == 1) {
+          System.out.print("#");
+        } else if (row == rowIdx && col == colIdx) {
+          System.out.print("@");
+        } else {
+          System.out.print(" ");
+        }
       }
       System.out.println(); // seperate each row of the maze
     }
   }
 
-  public void setPoints() { // set the entry and exit points (rows)
+  private void setPoints() { // set the entry and exit points (rows)
     for (int row = 0; row < height; row++) {
       if (maze[row][0] == 0) { // assuming entry on left side, find the open space at the fully left side
         startRow = row;
@@ -92,6 +98,6 @@ abstract class Maze { // includes methods and functionality related to the board
   }
 
   abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
+
   abstract void printAlgorithm();
 }
-

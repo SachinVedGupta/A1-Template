@@ -42,14 +42,13 @@ public class Main {
                 m.verify_path();
             }
             else {
+                logger.info("**** Computing path");
                 m.printAlgorithm();
             }
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }
         
-        logger.info("**** Computing path");
-        logger.info("PATH NOT COMPUTED");
         logger.info("** End of MazeRunner");
     }
 }

@@ -101,7 +101,7 @@ class Navigate extends Maze {
     return output;
   }
 
-  char numToDir(int numDir){ // converts a numeric direction to the allocating character representation
+  private char numToDir(int numDir){ // converts a numeric direction to the allocating character representation
     switch (numDir) {
       case 1:
         return('N');
@@ -116,7 +116,7 @@ class Navigate extends Maze {
     return 'Z';
   }
 
-  boolean isRight(int rowIndex, int colIndex, char curr_direction) { // checks if there is a wall on the right
+  private boolean isRight(int rowIndex, int colIndex, char curr_direction) { // checks if there is a wall on the right
     int[] one = verifyOneStep(rowIndex, colIndex, curr_direction, 'R');
     curr_direction = numToDir(one[2]);
 
@@ -128,7 +128,7 @@ class Navigate extends Maze {
     return false;
   }
 
-  boolean canFor(int rowIndex, int colIndex, char curr_direction) { // checks if it can go forward
+  private boolean canFor(int rowIndex, int colIndex, char curr_direction) { // checks if it can go forward
     int[] one = verifyOneStep(rowIndex, colIndex, curr_direction, 'F');
 
     if (one[2] == -1) {
@@ -137,7 +137,7 @@ class Navigate extends Maze {
     return true;
   }
 
-  String canonicalToFactorized(StringBuffer canonical) { // turns a canonical path into a factorized format
+  private String canonicalToFactorized(StringBuffer canonical) { // turns a canonical path into a factorized format
     StringBuffer factorized = new StringBuffer();
 
     int count = 0;
@@ -164,7 +164,7 @@ class Navigate extends Maze {
     return factorized.toString();
   }
 
-  void printAlgorithm() { // calculate a valid path and print it out to the user
+  public void printAlgorithm() { // calculate a valid path and print it out to the user
     StringBuffer path = new StringBuffer();
 
     int rowIdx = startRow;
@@ -212,7 +212,7 @@ class Navigate extends Maze {
     System.out.printf("Factorized: %s\n\n", canonicalToFactorized(path));
   }
 
-  boolean verify_path() {
+  public boolean verify_path() {
     System.out.println("Maze: \n");
     printMaze(startRow, 0);
     System.out.println("\n");
