@@ -22,15 +22,20 @@ public class Main {
 
             Options options = new Options();
             options.addOption("i", true, "Path to the input maze file");
+            options.addOption("p", true, "for entering maze path to verify");
 
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
 
             if (!cmd.hasOption("i")) { throw new Exception("no command given"); }
-            
+
+            String entered_path = "";
             String mazeFilePath = cmd.getOptionValue("i");
 
-            Navigate m = new Navigate(mazeFilePath, logger);
+            if (cmd.hasOption("p")) { entered_path = cmd.getOptionValue("p"); }
+
+
+            Navigate m = new Navigate(mazeFilePath, logger, entered_path);
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");

@@ -3,9 +3,18 @@ package ca.mcmaster.se2aa4.mazerunner;
 import org.apache.logging.log4j.Logger;
 
 class Navigate extends Maze {
-  public Navigate(String maze_path, Logger logger) {
+  private String entered_path;
+
+  public Navigate(String maze_path, Logger logger, String entered_path) {
     super(maze_path, logger);
-    printAlgorithm();
+    this.entered_path = entered_path;
+
+    if (entered_path != "") {
+      verify_path();
+    }
+    else {
+      printAlgorithm();
+    }
   }
 
   int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step) { // verifies a step and outputs the new location and direction
@@ -59,6 +68,7 @@ class Navigate extends Maze {
           break;
       }
     }
+    else { return output; }
 
     if (rowIndex >= height || colIndex >= width || rowIndex < 0 || colIndex < 0) { return output; } // {-1, -1, -1} not currently inside the board --> if output[2] == -1 that its invalid
     if (maze[rowIndex][colIndex] == 1) { return output; } // {-1, -1, -1} not currently on a valid square (its a wall)
@@ -129,10 +139,34 @@ class Navigate extends Maze {
     return true;
   }
 
+  String canonicalToFactorized(StringBuffer canonical) {
+    StringBuffer factorized = new StringBuffer();
 
-  boolean printAlgorithm() {
+    int count = 0;
+    char first = canonical.charAt(0);
+    for (int i = 0; i < canonical.length(); i++) {
+      if (canonical.charAt(i) != first) {
+        if (count > 1) { factorized.append(String.format("%d%c ", count, first)); }
+        else { factorized.append(String.format("%c ", first)); }
+
+        count = 1;
+        first = canonical.charAt(i);
+      }
+      else {
+        count += 1;
+      }
+    }
+    if (count > 1) { factorized.append(String.format("%d%c ", count, first)); }
+    else { factorized.append(String.format("%c ", first)); }
+
+    return factorized.toString();
+  }
+
+
+  void printAlgorithm() {
     // MVP Algorithm try going forward
     System.out.println("\n\nTry Path: \n\n");
+    StringBuffer path = new StringBuffer();
 
     int rowIdx = startRow;
     int colIdx = 0;
@@ -149,22 +183,22 @@ class Navigate extends Maze {
       if (isRight(rowIdx, colIdx, direction) && canFor(rowIdx, colIdx, direction)) {
         // move forward
         ans = verifyOneStep(rowIdx, colIdx, direction, 'F');
-        System.out.printf(" %c ", 'F');
+        path.append("F");
       }
       else if (isRight(rowIdx, colIdx, direction)) {
         // turn left
         ans = verifyOneStep(rowIdx, colIdx, direction, 'L');
-        System.out.printf(" %c ", 'L');
+        path.append("L");
       }
       else { // in the open, so turn right and move forward
         // right
         // forward
         int[] ans1 = verifyOneStep(rowIdx, colIdx, direction, 'R');
         direction = numToDir(ans1[2]);
-        System.out.printf(" %c ", 'R');
+        path.append("R");
 
         ans = verifyOneStep(rowIdx, colIdx, direction, 'F');
-        System.out.printf(" %c ", 'F');
+        path.append("F");
       }
 
       rowIdx = ans[0];
@@ -174,27 +208,37 @@ class Navigate extends Maze {
       
       System.out.println("\n\n\n");
       printMaze(rowIdx, colIdx);
-      System.out.println("\n");
+      System.out.println("\n"); 
+      
     }
 
 
+
+    System.out.printf("\n\n%s\n\n", path);
+    System.out.printf("\nFactorized: \n%s\n\n", canonicalToFactorized(path));
     System.out.println("\n\nPath is done\n\n");
-    return true;
+  }
 
-    //row = startRow
+  boolean verify_path() {
+    System.out.println(entered_path);
+    if (entered_path == "") { System.out.println("\n\nEntered Path does NOT work\n\n"); return false; }
+    int rowIdx = startRow;
+    int colIdx = 0;
+    char dir = 'E';
 
-    /*
-    char currentDirection = 'F';
-    for (int col = 0; col < width; col++) {
-      if (maze[startRow][col] == 0) {
-        System.out.print("F ");
-      }
-      else {
-        System.out.println("Path did not work");
-        break;
-      }
+    for (int i = 0; i < entered_path.length(); i++) {
+      int[] ans = verifyOneStep(rowIdx, colIdx, dir, entered_path.charAt(i));
+      if (ans[2] == -1) { System.out.println("\n\nEntered Path does NOT work\n\n"); return false; }
+
+      rowIdx = ans[0];
+      colIdx = ans[1];
+      dir = numToDir(ans[2]);
+
+      if (colIdx == width - 1) { System.out.println("\n\nEntered Path does WORK!\n\n"); return true; }
+      
     }
+
+    System.out.println("\n\nYou did not finish at the EXIT\n\n");
     return true;
-    */
   }
 }

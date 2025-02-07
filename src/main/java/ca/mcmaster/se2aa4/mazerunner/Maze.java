@@ -63,9 +63,10 @@ abstract class Maze {
   }
 
   public void printMaze(int rowIdx, int colIdx) {
-    for (int row = 0; row < height; row++) {
+    for (int row = -1; row <= height; row++) {
       for (int col = 0; col < width; col++) {
-        if (maze[row][col] == 1) { System.out.print("#"); }
+        if (row == -1 || row == height) { System.out.print("#"); }
+        else if (maze[row][col] == 1) { System.out.print("#"); }
         else if (row == rowIdx && col == colIdx) { System.out.print("@"); }
         else { System.out.print(" "); }
       }
@@ -85,6 +86,6 @@ abstract class Maze {
   }
 
   abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
-  abstract boolean printAlgorithm();
+  abstract void printAlgorithm();
 }
 
