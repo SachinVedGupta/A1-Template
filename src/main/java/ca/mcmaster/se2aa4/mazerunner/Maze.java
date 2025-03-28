@@ -11,8 +11,8 @@ abstract class Maze { // includes methods and functionality related to the board
   protected int height = -1;
   protected int width = -1;
   protected int[][] maze;
-  protected int startRow;
-  protected int endRow;
+  protected int startRow = -1;
+  protected int endRow = -1;
   protected Logger logger;
 
   public Maze(String maze_path, Logger logger) {

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 
 class Navigate extends Maze {
   private String entered_path;
+  public String generated_path = "";
 
   // Navigate constructor for creating an object of Maze and for setting the instance variable
   public Navigate(String maze_path, Logger logger, String entered_path) {
@@ -12,7 +13,7 @@ class Navigate extends Maze {
   }
 
   // verifies a step and outputs the new location and direction
-  int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step) {
+  public int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step) {
     int[] output = {-1, -1, -1};
 
     // updates the direction, rowIndex, colIndex based on the inputted step/action
@@ -116,6 +117,12 @@ class Navigate extends Maze {
     return 'Z';
   }
 
+  public char numToDirPublic(int numDir){ // public method to convert a numeric direction to the allocating character representation
+    return numToDir(numDir);
+  }
+
+  
+
   private boolean isRight(int rowIndex, int colIndex, char curr_direction) { // checks if there is a wall on the right
     int[] one = verifyOneStep(rowIndex, colIndex, curr_direction, 'R');
     curr_direction = numToDir(one[2]);
@@ -163,8 +170,18 @@ class Navigate extends Maze {
 
     return factorized.toString();
   }
+  
+  public String getGeneratedPath() {
+    if (generated_path == "") { return ""; }
+    return generated_path + "\n" + canonicalToFactorized(new StringBuffer(generated_path));
+  }
 
   public void printAlgorithm() { // calculate a valid path and print it out to the user
+    if (startRow == -1 || endRow == -1) { // if the start or end point is not set, then return
+      logger.info("Invalid Maze");
+      return;
+    }
+
     StringBuffer path = new StringBuffer();
 
     int rowIdx = startRow;
@@ -208,8 +225,14 @@ class Navigate extends Maze {
       
     }
 
+    generated_path = path.toString(); // set the generated path to the instance variable
+
     System.out.printf("\n\nNormal: %s\n\n", path);
     System.out.printf("Factorized: %s\n\n", canonicalToFactorized(path));
+  }
+
+  public void setEnteredPath(String entered_path) {
+    this.entered_path = entered_path;
   }
 
   public boolean verify_path() {
@@ -236,6 +259,6 @@ class Navigate extends Maze {
     }
 
     System.out.println("You did not finish at the EXIT\n\n"); // fails if didn't make it to the exit
-    return true;
+    return false;
   }
 }
