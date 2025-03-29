@@ -97,7 +97,7 @@ abstract class Maze { // includes methods and functionality related to the board
     }
   }
 
-  abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
+  // abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
 
   abstract void printAlgorithm();
 }
