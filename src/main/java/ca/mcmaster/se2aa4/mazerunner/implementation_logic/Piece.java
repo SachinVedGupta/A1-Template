@@ -1,4 +1,6 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.implementation_logic;
+
+import ca.mcmaster.se2aa4.mazerunner.observer_pattern.Subject;
 
 public class Piece extends Subject {
   private int rowIndex;

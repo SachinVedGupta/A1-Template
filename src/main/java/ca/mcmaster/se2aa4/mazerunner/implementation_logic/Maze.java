@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.implementation_logic;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,7 +6,7 @@ import java.io.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-abstract class Maze { // includes methods and functionality related to the board
+public abstract class Maze { // includes methods and functionality related to the board
   protected String maze_file_path;
   protected int height = -1;
   protected int width = -1;
@@ -68,7 +68,7 @@ abstract class Maze { // includes methods and functionality related to the board
     }
   }
 
-  protected void printMaze(int rowIdx, int colIdx) { // print out the maze and current location
+  public void printMaze(int rowIdx, int colIdx) { // print out the maze and current location
     for (int row = -1; row <= height; row++) {
       for (int col = 0; col < width; col++) {
         // based on the value in the array, print the character
@@ -97,7 +97,17 @@ abstract class Maze { // includes methods and functionality related to the board
     }
   }
 
-  // abstract int[] verifyOneStep(int rowIndex, int colIndex, char curr_direction, char step);
+  public int getStartRow() { // return the start row index
+    return startRow;
+  }
 
-  abstract void printAlgorithm();
+  public int getEndRow() { // return the end row index
+    return endRow;
+  }
+
+  public int[][] getMazeArray() { // return the maze array
+    return maze;
+  }
+
+  public abstract void printAlgorithm();
 }

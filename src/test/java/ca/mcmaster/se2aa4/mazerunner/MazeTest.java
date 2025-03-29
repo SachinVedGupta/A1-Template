@@ -3,6 +3,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ca.mcmaster.se2aa4.mazerunner.implementation_logic.Maze;
+import ca.mcmaster.se2aa4.mazerunner.implementation_logic.Navigate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
@@ -41,8 +45,8 @@ class MazeTest {
           {0, 0, 0, 0, 0, 0, 1}
         };
 
-        assertArrayEquals(expected_maze_array, maze.maze);
-        assertArrayEquals(expected_invalid_array, maze_invalid.maze);
+        assertArrayEquals(expected_maze_array, maze.getMazeArray());
+        assertArrayEquals(expected_invalid_array, maze_invalid.getMazeArray());
     }
     
     @Test
@@ -94,11 +98,11 @@ class MazeTest {
         // so must validate that these are correct
 
         // note that in setPoints function, row starts at 0 and ignores te first (full) row
-        assertEquals(0, maze.startRow);
-        assertEquals(4, maze.endRow);
+        assertEquals(0, maze.getStartRow());
+        assertEquals(4, maze.getEndRow());
 
-        assertEquals(4, maze_invalid.startRow);
-        assertEquals(-1, maze_invalid.endRow); // -1 as there is no exit point
+        assertEquals(4, maze_invalid.getStartRow());
+        assertEquals(-1, maze_invalid.getEndRow()); // -1 as there is no exit point
     }
 
 }

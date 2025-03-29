@@ -11,6 +11,11 @@ import org.apache.commons.cli.Options;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import ca.mcmaster.se2aa4.mazerunner.commands.Command;
+import ca.mcmaster.se2aa4.mazerunner.commands.GeneratePathCommand;
+import ca.mcmaster.se2aa4.mazerunner.commands.ValidatePathCommand;
+import ca.mcmaster.se2aa4.mazerunner.implementation_logic.Navigate;
+
 public class Main {
 
     private static final Logger logger = LogManager.getLogger();
@@ -37,14 +42,19 @@ public class Main {
             // create a Navigate object
             Navigate m = new Navigate(mazeFilePath, logger, entered_path);
 
-            // call the designated methods based on the command Options used
+            
+            Command command;
+
+            // created the designated Command based on the Options used
             if (entered_path != "") {
-                m.verify_path();
+                command = new ValidatePathCommand(m);
             }
             else {
                 logger.info("**** Computing path");
-                m.printAlgorithm();
+                command = new GeneratePathCommand(m);
             }
+            command.execute();
+        
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
         }

@@ -1,8 +1,10 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.implementation_logic;
 
 import org.apache.logging.log4j.Logger;
 
-class Navigate extends Maze implements Observer {
+import ca.mcmaster.se2aa4.mazerunner.observer_pattern.Observer;
+
+public class Navigate extends Maze implements Observer {
   private Piece piece;
   private String entered_path;
   private String generated_path = "";
@@ -105,7 +107,7 @@ class Navigate extends Maze implements Observer {
     
     while (colIndex != width - 1) { // while not at the exit point
       if (isRight() && canFor()) { // move forward to follow the wall
-        piece.doMove('F');;
+        piece.doMove('F');
         path.append("F");
       }
       else if (isRight()) { // is blocked in right, so turn right
@@ -144,7 +146,6 @@ class Navigate extends Maze implements Observer {
       if (rowIndex == -1) { System.out.println("Entered Path does NOT work\n\n"); return false; } // fails if an action wasn't valid
 
       if (colIndex == width - 1) { System.out.printf("Entered Path of %s does WORK!\n\n", this.entered_path); return true; } // success if reached exit location
-      printMaze(rowIndex, colIndex);
     }
 
     System.out.println("You did not finish at the EXIT\n\n"); // fails if didn't make it to the exit

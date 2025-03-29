@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.mazerunner;
+package ca.mcmaster.se2aa4.mazerunner.observer_pattern;
 import java.util.ArrayList;
 import java.util.List;
 
