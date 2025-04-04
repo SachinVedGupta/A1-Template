@@ -105,7 +105,7 @@ public class Navigate extends Maze implements Observer {
     printMaze(rowIndex, colIndex);
     System.out.println("\n");
     
-    while (colIndex != width - 1) { // while not at the exit point
+    while (colIndex != width - 1) { // while not at the exit point/location
       if (isRight() && canFor()) { // move forward to follow the wall
         piece.doMove('F');
         path.append("F");
